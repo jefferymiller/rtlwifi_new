@@ -1379,7 +1379,9 @@ static void rtl_op_sta_notify(struct ieee80211_hw *hw,
 
 static int rtl_op_ampdu_action(struct ieee80211_hw *hw,
 			       struct ieee80211_vif *vif,
-#if (LINUX_VERSION_CODE >= KERNEL_VERSION(4, 6, 0))
+#if ((LINUX_VERSION_CODE >= KERNEL_VERSION(4, 6, 0)) || \
+	((LINUX_VERSION_CODE <= KERNEL_VERSION(4, 5, 0)) && \
+	 (LINUX_VERSION_CODE >= KERNEL_VERSION(4, 4, 69))))
 			       struct ieee80211_ampdu_params *params)
 #else
 			       enum ieee80211_ampdu_mlme_action action,
@@ -1392,7 +1394,9 @@ static int rtl_op_ampdu_action(struct ieee80211_hw *hw,
 #endif
 {
 	struct rtl_priv *rtlpriv = rtl_priv(hw);
-#if (LINUX_VERSION_CODE >= KERNEL_VERSION(4, 6, 0))
+#if ((LINUX_VERSION_CODE >= KERNEL_VERSION(4, 6, 0)) || \
+	((LINUX_VERSION_CODE <= KERNEL_VERSION(4, 5, 0)) && \
+	 (LINUX_VERSION_CODE >= KERNEL_VERSION(4, 4, 69))))
 	struct ieee80211_sta *sta = params->sta;
 	enum ieee80211_ampdu_mlme_action action = params->action;
 	u16 tid = params->tid;
